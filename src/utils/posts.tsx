@@ -61,7 +61,12 @@ const ADD_POST = gql`
 `
 
 function useCreatePost() {
-  return useMutation<PostListElement, AddPostInput>(ADD_POST)
+  return useMutation<PostListElement, AddPostInput>(ADD_POST, {
+    refetchQueries: [GET_USER_POSTS],
+    update() {
+      // TODO: optimistic update
+    },
+  })
 }
 
 export { useUserPosts, usePostDetails, useCreatePost }

@@ -1,14 +1,37 @@
+import VisuallyHidden from "@reach/visually-hidden"
 import { Link } from "react-router-dom"
-import { PostListElement } from "../types"
+import { PostListElement as PostListElementType } from "../types"
+import { RightArrow, TrashCan } from "./vectors"
 
-function PostList({ posts }: { posts: PostListElement[] }) {
+function RemoveButton() {
   return (
-    <div>
-      {posts.map(({ id, title }) => (
-        <div key={id}>
-          <button type="button">Remove</button>
-          <Link to={`${id}`}>{title + "   >"}</Link>
-        </div>
+    <button type="button" title="Remove post">
+      <TrashCan />
+      <VisuallyHidden>Remove post</VisuallyHidden>
+    </button>
+  )
+}
+
+function PostListElement({ post }: { post: PostListElementType }) {
+  return (
+    <div className="border-2 border-black p-4 flex">
+      <RemoveButton />
+      <Link
+        to={`${post.id}`}
+        className="grid grid-flow-col justify-between w-full ml-4"
+      >
+        <span className="truncate mr-4">{post.title}</span>
+        <RightArrow />
+      </Link>
+    </div>
+  )
+}
+
+function PostList({ posts }: { posts: PostListElementType[] }) {
+  return (
+    <div className="grid gap-4">
+      {posts.map((post) => (
+        <PostListElement key={post.id} post={post} />
       ))}
     </div>
   )

@@ -8,6 +8,13 @@ module.exports = {
         ...fontFamily,
         sans: ["Varela Round", "sans-serif"],
       },
+      gridTemplateColumns: {
+        'input-field': '20% 1fr',
+        'user-header': 'auto 1fr auto',
+      },
+      boxShadow: {
+        'sharp': '3px 3px 0px 0px #000'
+      }
     },
   },
   plugins: [],

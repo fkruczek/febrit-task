@@ -22,8 +22,13 @@ function AppDialog({
   return (
     <div>
       {React.cloneElement(openButton, { onClick: open })}
-      <Dialog isOpen={isOpen} onDismiss={close} aria-label={title}>
-        <h1>{title}</h1>
+      <Dialog
+        isOpen={isOpen}
+        onDismiss={close}
+        aria-label={title}
+        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28"
+      >
+        <h1 className="text-4xl text-center mb-10">{title}</h1>
         <DialogContext.Provider
           value={{ openDialog: open, closeDialog: close }}
         >

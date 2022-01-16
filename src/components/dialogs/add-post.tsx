@@ -1,6 +1,12 @@
+import VisuallyHidden from "@reach/visually-hidden"
 import { useForm } from "react-hook-form"
 import { AddPostInput } from "../../types"
+import { appFieldsValidationRules } from "../../utils/forms"
+import { noop } from "../../utils/helpers"
 import { useCreatePost } from "../../utils/posts"
+import { Button } from "../buttons"
+import { Input, Textarea } from "../form"
+import { Plus } from "../vectors"
 import { AppDialog, useDialog } from "./app-dialog"
 
 function AddPostForm() {
@@ -17,34 +23,49 @@ function AddPostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Title
-        <input
-          type="text"
-          {...register("title", { required: true, min: 10, maxLength: 100 })}
-        />
-        {errors.title}
-      </label>
-      <label>
-        Body
-        <textarea {...register("body", { required: true, maxLength: 1000 })} />
-      </label>
-      {serverError && <div>Something went wrong todo</div>}
-      <button disabled={loading}>Cancel</button>
-      <button type="submit" disabled={loading}>
-        {loading ? "Loading" : "Save"}
-      </button>
+    <form onSubmit={handleSubmit(onSubmit)} className="grid">
+      <Input
+        error={errors.title}
+        {...register("title", appFieldsValidationRules.title)}
+      />
+      <Textarea
+        error={errors.body}
+        {...register("body", appFieldsValidationRules.body)}
+      />
+      {serverError && (
+        <span className="text-rose-700 text-xl text-right">
+          Something went wrong...
+        </span>
+      )}
+      <div className="grid gap-4 sm:grid-cols-2 sm:w-2/3 sm:justify-self-end mt-4">
+        <Button variant="secondary" onClick={closeDialog}>
+          Cancel
+        </Button>
+        <Button type="submit" isLoading={loading}>
+          {loading ? "Loading" : "Save"}
+        </Button>
+      </div>
     </form>
+  )
+}
+
+function AddPostButton({ onClick = noop }: { onClick?: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      type="button"
+      title="Add post"
+      className="w-12 h-12 border-4 border-black rounded-full bg-indigo-700 flex items-center justify-center focus:outline-none focus:bg-yellow-400 hover:bg-yellow-400"
+    >
+      <Plus />
+      <VisuallyHidden>Add post</VisuallyHidden>
+    </button>
   )
 }
 
 function AddPostDialog() {
   return (
-    <AppDialog
-      title="Add post"
-      openButton={<button type="button">Open dialog</button>}
-    >
+    <AppDialog title="Add post" openButton={<AddPostButton />}>
       <AddPostForm />
     </AppDialog>
   )
