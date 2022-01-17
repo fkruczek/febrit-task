@@ -2,6 +2,7 @@ import { Spinner } from "./vectors"
 
 type ButtonProps = {
   variant?: "primary" | "secondary"
+  size?: "md" | "lg"
   isLoading?: boolean
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -10,6 +11,7 @@ type ButtonProps = {
 
 function createButtonStyles({
   variant = "primary",
+  size = "lg",
   disabled,
   isLoading,
 }: ButtonProps) {
@@ -21,7 +23,9 @@ function createButtonStyles({
     disabled
       ? "cursor-not-allowed border-slate-600 text-slate-600"
       : "cursor-pointer"
-  } ${isLoading && "bg-indigo-300 pointer-events-none"}`
+  } ${isLoading && "bg-indigo-300 pointer-events-none"} ${
+    size === "lg" && "text-xl py-4 px-16"
+  }`
 }
 
 function Button(props: ButtonProps) {

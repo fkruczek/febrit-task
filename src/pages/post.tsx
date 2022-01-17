@@ -1,5 +1,5 @@
 import { Comments } from "../components/comments"
-import { UserHeader } from "../components/user"
+import { UserHeader } from "../components/user-header"
 import { usePostDetails } from "../utils/posts"
 
 function Post() {
@@ -8,7 +8,7 @@ function Post() {
   if (error || !data) return <p>Error :(</p>
   return (
     <div>
-      <UserHeader name={data.post.user.name} />
+      <UserHeader name={data.post.user.name} isLoading={loading} />
       <h1>{data.post.title}</h1>
       <p>{data.post.body}</p>
       <Comments />

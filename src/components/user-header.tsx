@@ -1,11 +1,14 @@
 import VisuallyHidden from "@reach/visually-hidden"
+import Skeleton from "react-loading-skeleton"
 import { useNavigate } from "react-router-dom"
 
 function UserHeader({
   name,
   children,
+  isLoading,
 }: {
-  name: string
+  name: string | null
+  isLoading: boolean
   children?: React.ReactNode
 }) {
   const navigate = useNavigate()
@@ -21,8 +24,14 @@ function UserHeader({
         <VisuallyHidden>Navigate back</VisuallyHidden>
         👈
       </button>
-      <span className="text-xl sm:text-3xl text-center">{name}</span>
-      <div className="justify-self-end w-12">{children}</div>
+      <span className="text-xl sm:text-3xl text-center">
+        {isLoading ? (
+          <Skeleton height={50} width={250} />
+        ) : (
+          name ?? "Author not found"
+        )}
+      </span>
+      <div className="justify-self-end w-12">{!!name && children}</div>
     </header>
   )
 }

@@ -19,18 +19,23 @@ export type PostComment = {
   body: string
 }
 
-export type UserListElement = {
-  id: string
-  name: string
+export type Contact = {
   email: string
   phone: string
   website: string
-  company: {
-    name: string
-    catchPhrase: string
-    bs: string
-  }
 }
+
+export type Company = {
+  name: string
+  catchPhrase: string
+  bs: string
+}
+
+export type UserListElement = {
+  id: string
+  name: string
+  company: Company
+} & Contact
 
 export type AddPostInput = {
   title: string

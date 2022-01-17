@@ -1,20 +1,21 @@
 import { AddPostDialog } from "../components/dialogs/add-post"
+import { FullPageError } from "../components/error"
 import { PostList } from "../components/post-list"
-import { UserHeader } from "../components/user"
+import { UserHeader } from "../components/user-header"
 import { useUserPosts } from "../utils/posts"
 
 function User() {
-  const { data, error, loading } = useUserPosts()
+  const {
+    data = { user: { posts: { data: [] }, name: null } },
+    error,
+    loading,
+  } = useUserPosts()
 
-  if (loading) return <span>todo loading</span>
-
-  if (error || !data) return <span>todo error</span>
-
-  if (!data.user.name) return <span>todo NO SUCH USER</span>
+  if (error) return <FullPageError />
 
   return (
     <div>
-      <UserHeader name={data.user.name}>
+      <UserHeader name={data.user.name} isLoading={loading}>
         <AddPostDialog />
       </UserHeader>
       <PostList posts={data.user.posts.data} />

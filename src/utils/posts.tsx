@@ -61,12 +61,78 @@ const ADD_POST = gql`
 `
 
 function useCreatePost() {
-  return useMutation<PostListElement, AddPostInput>(ADD_POST, {
-    refetchQueries: [GET_USER_POSTS],
-    update() {
-      // TODO: optimistic update
+  const { userId } = useParams()
+  return useMutation<{ createPost: PostListElement }, AddPostInput>(ADD_POST, {
+    // commented to present fake mutation
+    // refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
+    update(cache, { data }) {
+      if (!data) throw new Error("API unexpected behavior")
+      const cachedData = cache.readQuery<GetUserPostsResponse>({
+        query: GET_USER_POSTS,
+        variables: { id: userId },
+      })
+
+      if (!cachedData) return
+
+      cache.writeQuery<GetUserPostsResponse>({
+        query: GET_USER_POSTS,
+        variables: { id: userId },
+        data: {
+          user: {
+            name: cachedData.user.name,
+            posts: {
+              data: [data.createPost, ...cachedData.user.posts.data],
+            },
+          },
+        },
+      })
     },
   })
 }
 
-export { useUserPosts, usePostDetails, useCreatePost }
+const DELETE_POST = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id)
+  }
+`
+
+function useDeletePost(postId: string) {
+  const { userId } = useParams()
+  return useMutation<{ deletePost: string }, { id: string }>(DELETE_POST, {
+    variables: { id: postId },
+    // commented to present fake mutation
+    // refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
+    onError() {
+      window.alert("Error while deleting post...")
+    },
+    update(cache, { data }) {
+      if (!data) throw new Error("API unexpected behavior")
+      const cachedData = cache.readQuery<GetUserPostsResponse>({
+        query: GET_USER_POSTS,
+        variables: { id: userId },
+      })
+
+      if (!cachedData) return
+
+      // TODO: get lodash function or better way to update cache
+      cache.writeQuery<GetUserPostsResponse>({
+        query: GET_USER_POSTS,
+        variables: { id: userId },
+        data: {
+          ...cachedData,
+          user: {
+            ...cachedData.user,
+            posts: {
+              ...cachedData.user.posts,
+              data: cachedData.user.posts.data.filter(
+                (post) => post.id !== postId
+              ),
+            },
+          },
+        },
+      })
+    },
+  })
+}
+
+export { useUserPosts, usePostDetails, useCreatePost, useDeletePost }

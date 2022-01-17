@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom"
+import { UserCard, UserCardListSkeleton } from "../components/user-card"
 import { useUsers } from "../utils/user"
+import { FullPageError } from "../components/error"
 
 function UserList() {
-  const { data, loading, error } = useUsers()
-  if (loading) return <p>Loading...</p>
-  if (error || !data) return <p>Error :(</p>
+  const { data = { users: { data: [] } }, loading, error } = useUsers()
+  if (error) return <FullPageError />
   return (
-    <div>
-      {data.users.data.map(({ id, name }) => (
-        <div key={id}>
-          <Link to={`/user/${id}`}>{name}</Link>
-        </div>
-      ))}
+    <div className="grid gap-y-6 gap-x-10 mt-16 grid-cols-user-cards">
+      {loading ? (
+        <UserCardListSkeleton />
+      ) : (
+        data.users.data.map((userDetails) => (
+          <UserCard key={userDetails.id} {...userDetails} />
+        ))
+      )}
     </div>
   )
 }
