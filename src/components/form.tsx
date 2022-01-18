@@ -21,7 +21,7 @@ type FieldProps = {
 
 function createInputStyles(isError: boolean) {
   return `
-    ${isError ? "border-rose-600" : "border-black"}
+    ${isError ? "border-rose-600" : "border-default"}
      border-2 w-full focus:outline-none focus:border-indigo-700 p-1 shadow-sharp
     `
 }
@@ -34,9 +34,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & FieldProps>(
       <span className="capitalize mr-2 text-lg mt-1">{inputProps.name}</span>
       <input
         type="text"
-        {...inputProps}
         ref={ref}
         className={createInputStyles(!!error)}
+        {...inputProps}
       />
       <FieldErrorMessage error={error} />
     </label>
@@ -55,9 +55,9 @@ const Textarea = React.forwardRef<
   <label className="grid gap-x-4 grid-cols-input-field relative pb-6 mb-2 text-lg">
     <span className="capitalize mr-2 text-lg mt-1">{textareaProps.name}</span>
     <textarea
-      {...textareaProps}
       ref={ref}
       className={createInputStyles(!!error)}
+      {...textareaProps}
     />
     <FieldErrorMessage error={error} />
   </label>

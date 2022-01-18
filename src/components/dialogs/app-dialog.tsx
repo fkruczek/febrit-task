@@ -5,6 +5,25 @@ type DialogContextType = { openDialog: () => void; closeDialog: () => void }
 
 const DialogContext = React.createContext<DialogContextType | null>(null)
 
+function DialogContainer({
+  children,
+  title,
+}: {
+  children: React.ReactNode
+  title: string
+}) {
+  return (
+    <>
+      <div className="border-b-2 pl-4 h-6">{title}</div>
+      <div className="p-6 sm:p-12">
+        <h1 className="text-4xl text-center mb-10">{title}</h1>
+        {children}
+      </div>
+      <div className="border-t-2 h-6" />
+    </>
+  )
+}
+
 function AppDialog({
   title,
   openButton,
@@ -26,14 +45,15 @@ function AppDialog({
         isOpen={isOpen}
         onDismiss={close}
         aria-label={title}
-        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28"
+        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28 border-2 p-0"
       >
-        <h1 className="text-4xl text-center mb-10">{title}</h1>
-        <DialogContext.Provider
-          value={{ openDialog: open, closeDialog: close }}
-        >
-          {children}
-        </DialogContext.Provider>
+        <DialogContainer title={title}>
+          <DialogContext.Provider
+            value={{ openDialog: open, closeDialog: close }}
+          >
+            {children}
+          </DialogContext.Provider>
+        </DialogContainer>
       </Dialog>
     </div>
   )

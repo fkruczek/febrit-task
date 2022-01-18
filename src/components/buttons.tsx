@@ -1,3 +1,4 @@
+import { Link, LinkProps } from "react-router-dom"
 import { Spinner } from "./vectors"
 
 type ButtonProps = {
@@ -11,14 +12,14 @@ type ButtonProps = {
 
 function createButtonStyles({
   variant = "primary",
-  size = "lg",
+  size = "md",
   disabled,
   isLoading,
 }: ButtonProps) {
-  return `bg-blue-900 font-bold py-2 px-4 border-2 border-black shadow focus:outline-none flex justify-center items-center shadow-sharp ${
+  return `bg-blue-900 font-bold py-2 px-4 border-2 border-default shadow focus:outline-none flex justify-center items-center shadow-sharp ${
     variant === "primary"
       ? "bg-indigo-700 text-white hover:bg-indigo-500 focus:bg-indigo-500"
-      : "bg-white hover:bg-yellow-200 focus:bg-red-200"
+      : "bg-white hover:bg-yellow-200 focus:bg-yellow-400"
   } ${
     disabled
       ? "cursor-not-allowed border-slate-600 text-slate-600"
@@ -33,12 +34,31 @@ function Button(props: ButtonProps) {
   return (
     <button
       type="button"
-      {...buttonProps}
       className={createButtonStyles(props)}
+      {...buttonProps}
     >
       {isLoading ? <Spinner /> : children}
     </button>
   )
 }
 
-export { Button }
+function LinkButton(props: ButtonProps) {
+  return (
+    <button type="button" className="underline text-cyan-700" {...props}>
+      {props.children}
+    </button>
+  )
+}
+
+function ButtonStyledRouterLink(props: LinkProps) {
+  return (
+    <Link
+      className={createButtonStyles({ variant: "secondary", size: "lg" })}
+      {...props}
+    >
+      {props.children}
+    </Link>
+  )
+}
+
+export { Button, LinkButton, ButtonStyledRouterLink }

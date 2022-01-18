@@ -1,6 +1,6 @@
 import { AddPostDialog } from "../components/dialogs/add-post"
 import { FullPageError } from "../components/error"
-import { PostList } from "../components/post-list"
+import { PostList, PostListSkeleton } from "../components/post-list"
 import { UserHeader } from "../components/user-header"
 import { useUserPosts } from "../utils/posts"
 
@@ -18,7 +18,11 @@ function User() {
       <UserHeader name={data.user.name} isLoading={loading}>
         <AddPostDialog />
       </UserHeader>
-      <PostList posts={data.user.posts.data} />
+      {loading ? (
+        <PostListSkeleton />
+      ) : (
+        <PostList posts={data.user.posts.data} />
+      )}
     </div>
   )
 }

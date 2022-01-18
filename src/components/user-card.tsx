@@ -1,13 +1,12 @@
-import { ReactNode } from "react"
 import Skeleton from "react-loading-skeleton"
-import { Link } from "react-router-dom"
 import {
   Company as CompanyType,
   Contact as ContactType,
   UserListElement,
-} from "../types"
+} from "../types/api-models"
+import { ContainerProps } from "../types/util"
 import { Anchor } from "./anchor"
-import { Button } from "./buttons"
+import { ButtonStyledRouterLink } from "./buttons"
 
 function CompanyInfo({ bs, catchPhrase, name }: CompanyType) {
   return (
@@ -31,8 +30,10 @@ function Contact({ phone, website, email }: ContactType) {
   )
 }
 
-function UserCardContainer({ children }: { children: ReactNode }) {
-  return <div className="grid border-2 border-black gap-4 p-8">{children}</div>
+function UserCardContainer({ children }: ContainerProps) {
+  return (
+    <div className="grid border-2 border-default gap-4 p-8">{children}</div>
+  )
 }
 
 function UserCard({
@@ -46,10 +47,22 @@ function UserCard({
       <span className="font-extrabold text-lg">{name}</span>
       <Contact {...contactProps} />
       <CompanyInfo {...companyProps} />
-      <Link to={`/user/${id}`} className="justify-self-center self-end">
-        <Button variant="secondary">Details</Button>
-      </Link>
+      <ButtonStyledRouterLink to={`/user/${id}`}>
+        Details
+      </ButtonStyledRouterLink>
     </UserCardContainer>
+  )
+}
+
+function UserCardList({ users }: { users: UserListElement[] }) {
+  if (users.length === 0) return <span>No users...</span>
+
+  return (
+    <>
+      {users.map((user) => (
+        <UserCard key={user.id} {...user} />
+      ))}
+    </>
   )
 }
 
@@ -64,11 +77,11 @@ function UserCardSkeleton() {
 function UserCardListSkeleton() {
   return (
     <>
-      {[...Array(10)].map(() => (
-        <UserCardSkeleton />
+      {[...Array(10)].map((_, index) => (
+        <UserCardSkeleton key={index} />
       ))}
     </>
   )
 }
 
-export { UserCard, UserCardListSkeleton }
+export { UserCardList, UserCardListSkeleton }

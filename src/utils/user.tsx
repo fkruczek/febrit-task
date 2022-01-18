@@ -1,5 +1,7 @@
-import { gql, useQuery } from "@apollo/client"
-import { UserListElement } from "../types"
+import { gql, useApolloClient, useQuery } from "@apollo/client"
+import { useParams } from "react-router-dom"
+import { UserListElement } from "../types/api-models"
+import { GetUserPostsResponse, GET_USER_POSTS } from "./posts"
 
 const GET_USERS = gql`
   query GetUsers {
@@ -28,4 +30,13 @@ function useUsers() {
   return useQuery<GetUsersResponse>(GET_USERS)
 }
 
-export { useUsers }
+function useNameFromCache() {
+  const { userId } = useParams()
+  const { cache } = useApolloClient()
+  const data = cache.readQuery<GetUserPostsResponse>({
+    query: GET_USER_POSTS,
+    variables: { id: userId },
+  })
+  return data?.user?.name ?? null
+}
+export { useUsers, useNameFromCache }

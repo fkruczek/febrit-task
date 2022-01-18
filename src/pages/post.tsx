@@ -1,18 +1,28 @@
 import { Comments } from "../components/comments"
+import { FullPageError } from "../components/error"
+import { PostContent, PostContentSkeleton } from "../components/post"
 import { UserHeader } from "../components/user-header"
 import { usePostDetails } from "../utils/posts"
 
 function Post() {
-  const { data, loading, error } = usePostDetails()
-  if (loading) return <p>Loading...</p>
-  if (error || !data) return <p>Error :(</p>
+  const {
+    data = {
+      post: { id: undefined, title: "", body: "", user: { name: null } },
+    },
+    loading,
+    error,
+  } = usePostDetails()
+  if (error) return <FullPageError />
   return (
-    <div>
+    <>
       <UserHeader name={data.post.user.name} isLoading={loading} />
-      <h1>{data.post.title}</h1>
-      <p>{data.post.body}</p>
-      <Comments />
-    </div>
+      {loading ? (
+        <PostContentSkeleton />
+      ) : (
+        <PostContent body={data.post.body} title={data.post.title} />
+      )}
+      {data.post.id && <Comments />}
+    </>
   )
 }
 export { Post }

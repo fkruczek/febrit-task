@@ -3,6 +3,9 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    borderColor: {
+      default: 'black',
+    },
     extend: {
       fontFamily: {
         ...fontFamily,

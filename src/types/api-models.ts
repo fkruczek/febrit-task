@@ -4,9 +4,9 @@ export type PostListElement = {
 }
 
 export type PostDetails = {
-  id: string
-  body: string
-  title: string
+  id: string | null
+  body: string | null
+  title: string | null
   user: {
     name: string
   }

@@ -1,4 +1,4 @@
-import { UserCard, UserCardListSkeleton } from "../components/user-card"
+import { UserCardList, UserCardListSkeleton } from "../components/user-card"
 import { useUsers } from "../utils/user"
 import { FullPageError } from "../components/error"
 
@@ -10,9 +10,7 @@ function UserList() {
       {loading ? (
         <UserCardListSkeleton />
       ) : (
-        data.users.data.map((userDetails) => (
-          <UserCard key={userDetails.id} {...userDetails} />
-        ))
+        <UserCardList users={data.users.data} />
       )}
     </div>
   )

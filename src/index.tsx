@@ -4,6 +4,7 @@ import ReactDOM from "react-dom"
 import { BrowserRouter } from "react-router-dom"
 import App from "./App"
 import "./bootstrap"
+import { ScrollTop } from "./components/scroll-top"
 
 const client = new ApolloClient({
   uri: "https://graphqlzero.almansi.me/api",
@@ -15,6 +16,7 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <App />
+        <ScrollTop />
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

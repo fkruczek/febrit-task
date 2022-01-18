@@ -1,9 +1,10 @@
 import VisuallyHidden from "@reach/visually-hidden"
 import Skeleton from "react-loading-skeleton"
 import { useNavigate } from "react-router-dom"
+import { useNameFromCache } from "../utils/user"
 
 function UserHeader({
-  name,
+  name: nameFromProps,
   children,
   isLoading,
 }: {
@@ -12,6 +13,9 @@ function UserHeader({
   children?: React.ReactNode
 }) {
   const navigate = useNavigate()
+  const nameFromCache = useNameFromCache()
+
+  const displayName = nameFromProps ?? nameFromCache
 
   return (
     <header className="grid grid-cols-user-header h-36 items-center w-full">
@@ -25,13 +29,13 @@ function UserHeader({
         👈
       </button>
       <span className="text-xl sm:text-3xl text-center">
-        {isLoading ? (
-          <Skeleton height={50} width={250} />
+        {isLoading && !displayName ? (
+          <Skeleton height={50} width={100} />
         ) : (
-          name ?? "Author not found"
+          displayName ?? "Autor doesn't exists"
         )}
       </span>
-      <div className="justify-self-end w-12">{!!name && children}</div>
+      <div className="justify-self-end w-12">{!!nameFromProps && children}</div>
     </header>
   )
 }

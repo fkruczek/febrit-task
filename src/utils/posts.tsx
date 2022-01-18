@@ -1,10 +1,11 @@
 import { gql, useMutation, useQuery } from "@apollo/client"
 import { useParams } from "react-router-dom"
-import { AddPostInput, PostDetails, PostListElement } from "../types"
+import { AddPostInput, PostDetails, PostListElement } from "../types/api-models"
 
-const GET_USER_POSTS = gql`
+export const GET_USER_POSTS = gql`
   query UserPostList($id: ID!) {
     user(id: $id) {
+      id
       name
       posts {
         data {
@@ -16,8 +17,12 @@ const GET_USER_POSTS = gql`
   }
 `
 
-type GetUserPostsResponse = {
-  user: { posts: { data: Array<PostListElement> }; name: string }
+export type GetUserPostsResponse = {
+  user: {
+    id: string | null
+    posts: { data: Array<PostListElement> }
+    name: string
+  }
 }
 
 function useUserPosts() {
@@ -30,6 +35,7 @@ function useUserPosts() {
 const GET_POST_DETAILS = gql`
   query PostDetails($id: ID!) {
     post(id: $id) {
+      id
       title
       body
       user {
@@ -79,6 +85,7 @@ function useCreatePost() {
         variables: { id: userId },
         data: {
           user: {
+            id: userId ?? null,
             name: cachedData.user.name,
             posts: {
               data: [data.createPost, ...cachedData.user.posts.data],
