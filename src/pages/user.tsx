@@ -1,4 +1,4 @@
-import { AddPostDialog } from "../components/dialogs/add-post"
+import { AddPostDialog } from "../components/add-post"
 import { FullPageError } from "../components/error"
 import { PostList, PostListSkeleton } from "../components/post-list"
 import { UserHeader } from "../components/user-header"

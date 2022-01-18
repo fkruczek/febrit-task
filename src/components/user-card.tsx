@@ -47,7 +47,7 @@ function UserCard({
       <span className="font-extrabold text-lg">{name}</span>
       <Contact {...contactProps} />
       <CompanyInfo {...companyProps} />
-      <ButtonStyledRouterLink to={`/user/${id}`}>
+      <ButtonStyledRouterLink to={`/user/${id}`} title={`${name} details`}>
         Details
       </ButtonStyledRouterLink>
     </UserCardContainer>

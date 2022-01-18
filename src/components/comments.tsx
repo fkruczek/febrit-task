@@ -3,6 +3,7 @@ import Skeleton from "react-loading-skeleton"
 import { PostComment } from "../types/api-models"
 import { ContainerProps } from "../types/util"
 import { useComments } from "../utils/comments"
+import { AddCommentDialog } from "./add-comment"
 import { Anchor } from "./anchor"
 import { LinkButton } from "./buttons"
 import { FullPageError } from "./error"
@@ -65,7 +66,7 @@ function Comments() {
         <LinkButton onClick={() => setShowComments(!showComments)}>
           {showComments ? "Hide " : "Show "} comments
         </LinkButton>
-        <LinkButton>Add comment</LinkButton>
+        <AddCommentDialog />
       </div>
       {showComments && <CommentList />}
     </div>

@@ -2,11 +2,21 @@ import React from "react"
 import { FieldError } from "react-hook-form"
 import { getErrorMessage } from "../utils/forms"
 
-function FieldErrorMessage({ error }: { error?: FieldError }) {
+function FieldErrorMessage({
+  error,
+  fieldName,
+}: {
+  error?: FieldError
+  fieldName: string
+}) {
   return (
-    <span className="col-start-2 text-rose-700 absolute bottom-0 text-sm">
+    <p
+      className="col-start-2 text-rose-700 absolute bottom-0 text-sm"
+      role="alert"
+      id={`${fieldName}-error`}
+    >
       {error && getErrorMessage(error)}
-    </span>
+    </p>
   )
 }
 
@@ -16,6 +26,7 @@ type InputProps = React.DetailedHTMLProps<
 >
 
 type FieldProps = {
+  name: string
   error?: FieldError
 }
 
@@ -26,8 +37,6 @@ function createInputStyles(isError: boolean) {
     `
 }
 
-// TODO: maybe remove duplication with Textarea
-
 const Input = React.forwardRef<HTMLInputElement, InputProps & FieldProps>(
   ({ error, ...inputProps }, ref) => (
     <label className="grid gap-x-4 grid-cols-input-field relative pb-6 mb-2">
@@ -35,10 +44,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps & FieldProps>(
       <input
         type="text"
         ref={ref}
+        aria-invalid={!!error || undefined}
+        aria-describedby={!!error ? `${inputProps.name}-error` : undefined}
         className={createInputStyles(!!error)}
         {...inputProps}
       />
-      <FieldErrorMessage error={error} />
+      <FieldErrorMessage error={error} fieldName={inputProps.name} />
     </label>
   )
 )
@@ -57,9 +68,11 @@ const Textarea = React.forwardRef<
     <textarea
       ref={ref}
       className={createInputStyles(!!error)}
+      aria-invalid={!!error || undefined}
+      aria-describedby={!!error ? `${textareaProps.name}-error` : undefined}
       {...textareaProps}
     />
-    <FieldErrorMessage error={error} />
+    <FieldErrorMessage error={error} fieldName={textareaProps.name} />
   </label>
 ))
 

@@ -41,3 +41,9 @@ export type AddPostInput = {
   title: string
   body: string
 }
+
+export type AddCommentInput = {
+  name: string
+  email: string
+  body: string
+}

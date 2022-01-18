@@ -45,7 +45,7 @@ function AppDialog({
         isOpen={isOpen}
         onDismiss={close}
         aria-label={title}
-        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28 border-2 p-0"
+        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28 border-2 p-0 shadow-sharp"
       >
         <DialogContainer title={title}>
           <DialogContext.Provider
