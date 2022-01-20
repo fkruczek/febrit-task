@@ -6,7 +6,6 @@ import { useComments } from "../utils/comments"
 import { AddCommentDialog } from "./add-comment"
 import { Anchor } from "./anchor"
 import { LinkButton } from "./buttons"
-import { FullPageError } from "./error"
 
 function CommentContainer({ children }: ContainerProps) {
   return <div className="border-2 p-4">{children}</div>
@@ -43,7 +42,8 @@ function CommentList() {
     loading,
     error,
   } = useComments()
-  if (error) return <FullPageError />
+
+  if (error) throw new Error(error.message)
 
   return (
     <div className="grid gap-4">
@@ -66,7 +66,7 @@ function Comments() {
         <LinkButton onClick={() => setShowComments(!showComments)}>
           {showComments ? "Hide " : "Show "} comments
         </LinkButton>
-        <AddCommentDialog />
+        <AddCommentDialog setShowComments={setShowComments} />
       </div>
       {showComments && <CommentList />}
     </div>

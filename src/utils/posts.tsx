@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/client"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { AddPostInput, PostDetails, PostListElement } from "../types/api-models"
 
 export const GET_USER_POSTS = gql`
@@ -39,6 +39,7 @@ const GET_POST_DETAILS = gql`
       title
       body
       user {
+        id
         name
       }
     }
@@ -69,8 +70,7 @@ const ADD_POST = gql`
 function useCreatePost() {
   const { userId } = useParams()
   return useMutation<{ createPost: PostListElement }, AddPostInput>(ADD_POST, {
-    // commented to present fake mutation
-    // refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
+    refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
     update(cache, { data }) {
       if (!data) throw new Error("API unexpected behavior")
       const cachedData = cache.readQuery<GetUserPostsResponse>({
@@ -103,14 +103,17 @@ const DELETE_POST = gql`
   }
 `
 
-function useDeletePost(postId: string) {
+function useDeletePost(postId: string = "") {
   const { userId } = useParams()
+  const navigate = useNavigate()
   return useMutation<{ deletePost: string }, { id: string }>(DELETE_POST, {
     variables: { id: postId },
-    // commented to present fake mutation
-    // refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
+    refetchQueries: [{ query: GET_USER_POSTS, variables: { id: userId } }],
     onError() {
       window.alert("Error while deleting post...")
+    },
+    onCompleted() {
+      navigate(`/user/${userId}`)
     },
     update(cache, { data }) {
       if (!data) throw new Error("API unexpected behavior")

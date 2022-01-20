@@ -1,5 +1,8 @@
 import Skeleton from "react-loading-skeleton"
+import { useParams } from "react-router-dom"
 import { ContainerProps } from "../types/util"
+import { useDeletePost } from "../utils/posts"
+import { RemoveButton } from "./buttons"
 
 function PostContentContainer({ children }: ContainerProps) {
   return <div className="grid gap-4 my-10">{children}</div>
@@ -29,4 +32,17 @@ function PostContent({
   )
 }
 
-export { PostContent, PostContentSkeleton }
+function PostHeaderContent() {
+  const { postId } = useParams()
+  const [deletePost, { loading }] = useDeletePost(postId)
+
+  return (
+    <RemoveButton
+      title="Remove this post"
+      isLoading={loading}
+      onDelete={deletePost}
+    />
+  )
+}
+
+export { PostContent, PostContentSkeleton, PostHeaderContent }

@@ -1,5 +1,4 @@
 import { AddPostDialog } from "../components/add-post"
-import { FullPageError } from "../components/error"
 import { PostList, PostListSkeleton } from "../components/post-list"
 import { UserHeader } from "../components/user-header"
 import { useUserPosts } from "../utils/posts"
@@ -11,11 +10,15 @@ function User() {
     loading,
   } = useUserPosts()
 
-  if (error) return <FullPageError />
+  if (error) throw new Error(error.message)
 
   return (
     <div>
-      <UserHeader name={data.user.name} isLoading={loading}>
+      <UserHeader
+        name={data.user.name}
+        isLoading={loading}
+        navigateBackRoute="/"
+      >
         <AddPostDialog />
       </UserHeader>
       {loading ? (

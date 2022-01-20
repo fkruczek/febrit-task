@@ -7,12 +7,18 @@ function UserHeader({
   name: nameFromProps,
   children,
   isLoading,
+  navigateBackRoute,
 }: {
   name: string | null
   isLoading: boolean
   children?: React.ReactNode
+  navigateBackRoute?: string
 }) {
   const navigate = useNavigate()
+
+  const navigateBack = navigateBackRoute
+    ? () => navigate(navigateBackRoute)
+    : () => navigate(-1)
   const nameFromCache = useNameFromCache()
 
   const displayName = nameFromProps ?? nameFromCache
@@ -23,7 +29,7 @@ function UserHeader({
         type="button"
         title="Navigate back"
         className="text-6xl justify-self-start"
-        onClick={() => navigate(-1)}
+        onClick={navigateBack}
       >
         <VisuallyHidden>Navigate back</VisuallyHidden>
         👈
@@ -32,7 +38,7 @@ function UserHeader({
         {isLoading && !displayName ? (
           <Skeleton height={50} width={100} />
         ) : (
-          displayName ?? "Autor doesn't exists"
+          displayName ?? "Author doesn't exists"
         )}
       </span>
       <div className="justify-self-end w-12">{!!nameFromProps && children}</div>

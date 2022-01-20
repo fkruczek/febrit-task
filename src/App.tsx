@@ -4,8 +4,6 @@ import { Post } from "./pages/post"
 import { User } from "./pages/user"
 import { UserList } from "./pages/user-list"
 
-// TODO: default route component
-
 function App() {
   return (
     <div className="max-w-7xl m-auto p-4 mb-40">

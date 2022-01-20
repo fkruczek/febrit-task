@@ -1,6 +1,6 @@
 import React from "react"
 import { FieldError } from "react-hook-form"
-import { getErrorMessage } from "../utils/forms"
+import { getErrorMessage } from "../../utils/forms"
 
 function FieldErrorMessage({
   error,

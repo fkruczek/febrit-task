@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom"
 import App from "./App"
 import "./bootstrap"
 import { ScrollTop } from "./components/scroll-top"
+import { ErrorBoundary } from "react-error-boundary"
+import { FullPageError } from "./components/error"
 
 const client = new ApolloClient({
   uri: "https://graphqlzero.almansi.me/api",
@@ -15,8 +17,10 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
-        <ScrollTop />
+        <ErrorBoundary FallbackComponent={FullPageError}>
+          <App />
+          <ScrollTop />
+        </ErrorBoundary>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

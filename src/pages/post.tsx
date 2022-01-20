@@ -1,21 +1,38 @@
 import { Comments } from "../components/comments"
-import { FullPageError } from "../components/error"
-import { PostContent, PostContentSkeleton } from "../components/post"
+import {
+  PostContent,
+  PostContentSkeleton,
+  PostHeaderContent,
+} from "../components/post"
 import { UserHeader } from "../components/user-header"
 import { usePostDetails } from "../utils/posts"
 
 function Post() {
   const {
     data = {
-      post: { id: undefined, title: "", body: "", user: { name: null } },
+      id: undefined,
+      post: {
+        id: undefined,
+        title: "",
+        body: "",
+        user: { id: undefined, name: null },
+      },
     },
     loading,
     error,
   } = usePostDetails()
-  if (error) return <FullPageError />
+
+  if (error) throw new Error(error.message)
+
   return (
     <>
-      <UserHeader name={data.post.user.name} isLoading={loading} />
+      <UserHeader
+        name={data.post.user.name}
+        isLoading={loading}
+        navigateBackRoute={data.post.user.id && `/user/${data.post.user.id}`}
+      >
+        <PostHeaderContent />
+      </UserHeader>
       {loading ? (
         <PostContentSkeleton />
       ) : (

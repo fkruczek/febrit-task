@@ -8,6 +8,7 @@ export type PostDetails = {
   body: string | null
   title: string | null
   user: {
+    id: string
     name: string
   }
 }

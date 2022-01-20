@@ -39,7 +39,7 @@ function AppDialog({
   const close = () => setIsOpen(false)
 
   return (
-    <div>
+    <>
       {React.cloneElement(openButton, { onClick: open })}
       <Dialog
         isOpen={isOpen}
@@ -55,7 +55,7 @@ function AppDialog({
           </DialogContext.Provider>
         </DialogContainer>
       </Dialog>
-    </div>
+    </>
   )
 }
 

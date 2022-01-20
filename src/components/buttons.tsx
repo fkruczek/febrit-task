@@ -1,5 +1,6 @@
+import VisuallyHidden from "@reach/visually-hidden"
 import { Link, LinkProps } from "react-router-dom"
-import { Spinner } from "./vectors"
+import { Spinner, TrashCan } from "./vectors"
 
 type ButtonProps = {
   variant?: "primary" | "secondary"
@@ -61,4 +62,26 @@ function ButtonStyledRouterLink(props: LinkProps) {
   )
 }
 
-export { Button, LinkButton, ButtonStyledRouterLink }
+function RemoveButton({
+  onDelete,
+  isLoading,
+  title,
+}: {
+  onDelete: () => unknown
+  isLoading: boolean
+  title: string
+}) {
+  return (
+    <button
+      type="button"
+      title={title}
+      className="pl-4 fill-indigo-700 hover:fill-yellow-500 focus:outline-none focus:fill-yellow-500"
+      onClick={onDelete}
+    >
+      {isLoading ? <Spinner /> : <TrashCan />}
+      <VisuallyHidden>{title}</VisuallyHidden>
+    </button>
+  )
+}
+
+export { Button, LinkButton, ButtonStyledRouterLink, RemoveButton }

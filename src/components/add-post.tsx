@@ -4,10 +4,10 @@ import { AddPostInput } from "../types/api-models"
 import { appFieldsValidationRules } from "../utils/forms"
 import { noop } from "../utils/helpers"
 import { useCreatePost } from "../utils/posts"
-import { Button } from "./buttons"
-import { Input, Textarea } from "./form"
-import { Plus } from "./vectors"
 import { AppDialog, useDialog } from "./app-dialog"
+import { DialogFormFooter } from "./forms/dialog-form"
+import { Input, Textarea } from "./forms/inputs"
+import { Plus } from "./vectors"
 
 function AddPostForm() {
   const [addPost, { loading, error: serverError }] = useCreatePost()
@@ -17,6 +17,7 @@ function AddPostForm() {
     formState: { errors },
   } = useForm<AddPostInput>()
   const { closeDialog } = useDialog()
+
   const onSubmit = async (variables: AddPostInput) => {
     await addPost({ variables })
     closeDialog()
@@ -32,19 +33,7 @@ function AddPostForm() {
         error={errors.body}
         {...register("body", appFieldsValidationRules.body)}
       />
-      {serverError && (
-        <span className="text-rose-700 text-xl text-right">
-          Something went wrong...
-        </span>
-      )}
-      <div className="grid gap-4 sm:grid-cols-2 sm:w-2/3 sm:justify-self-end mt-4">
-        <Button variant="secondary" onClick={closeDialog}>
-          Cancel
-        </Button>
-        <Button type="submit" isLoading={loading}>
-          {loading ? "Loading" : "Save"}
-        </Button>
-      </div>
+      <DialogFormFooter isLoading={loading} isError={!!serverError} />
     </form>
   )
 }

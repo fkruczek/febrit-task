@@ -1,24 +1,32 @@
 import { useForm } from "react-hook-form"
 import { AddCommentInput } from "../types/api-models"
+import { useCreateComment } from "../utils/comments"
 import { appFieldsValidationRules } from "../utils/forms"
 import { noop } from "../utils/helpers"
 import { AppDialog, useDialog } from "./app-dialog"
-import { Button, LinkButton } from "./buttons"
-import { Input, Textarea } from "./form"
+import { LinkButton } from "./buttons"
+import { DialogFormFooter } from "./forms/dialog-form"
+import { Input, Textarea } from "./forms/inputs"
 
-function AddCommentForm() {
+type AddCommentFormProps = {
+  setShowComments: (showComments: boolean) => void
+}
+
+function AddCommentForm({ setShowComments }: AddCommentFormProps) {
+  const [addComment, { loading, error: serverError }] = useCreateComment()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AddCommentInput>()
   const { closeDialog } = useDialog()
+
   const onSubmit = async (variables: AddCommentInput) => {
-    console.log(variables)
+    await addComment({ variables })
     closeDialog()
+    setShowComments(true)
   }
-  const loading = false
-  const serverError = false
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid">
       <Input
@@ -34,19 +42,7 @@ function AddCommentForm() {
         error={errors.body}
         {...register("body", appFieldsValidationRules.body)}
       />
-      {serverError && (
-        <span className="text-rose-700 text-xl text-right">
-          Something went wrong...
-        </span>
-      )}
-      <div className="grid gap-4 sm:grid-cols-2 sm:w-2/3 sm:justify-self-end mt-4">
-        <Button variant="secondary" onClick={closeDialog}>
-          Cancel
-        </Button>
-        <Button type="submit" isLoading={loading}>
-          {loading ? "Loading" : "Save"}
-        </Button>
-      </div>
+      <DialogFormFooter isLoading={loading} isError={!!serverError} />
     </form>
   )
 }
@@ -55,10 +51,10 @@ function AddPostButton({ onClick = noop }: { onClick?: () => void }) {
   return <LinkButton onClick={onClick}>Add comment</LinkButton>
 }
 
-function AddCommentDialog() {
+function AddCommentDialog(props: AddCommentFormProps) {
   return (
     <AppDialog title="Add comment" openButton={<AddPostButton />}>
-      <AddCommentForm />
+      <AddCommentForm {...props} />
     </AppDialog>
   )
 }
