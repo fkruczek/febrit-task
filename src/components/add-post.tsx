@@ -44,7 +44,7 @@ function AddPostButton({ onClick = noop }: { onClick?: () => void }) {
       onClick={onClick}
       type="button"
       title="Add post"
-      className="w-12 h-12 border-4 border-default rounded-full bg-indigo-700 flex items-center justify-center focus:outline-none focus:bg-yellow-400 hover:bg-yellow-400"
+      className="w-12 h-12 border-4 border-black rounded-full bg-indigo-700 flex items-center justify-center focus:outline-none focus:bg-yellow-400 hover:bg-yellow-400"
     >
       <Plus />
       <VisuallyHidden>Add post</VisuallyHidden>

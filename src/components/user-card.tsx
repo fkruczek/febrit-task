@@ -31,9 +31,7 @@ function Contact({ phone, website, email }: ContactType) {
 }
 
 function UserCardContainer({ children }: ContainerProps) {
-  return (
-    <div className="grid border-2 border-default gap-4 p-8">{children}</div>
-  )
+  return <div className="grid border-2 border-black gap-4 p-8">{children}</div>
 }
 
 function UserCard({

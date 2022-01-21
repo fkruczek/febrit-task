@@ -32,7 +32,7 @@ type FieldProps = {
 
 function createInputStyles(isError: boolean) {
   return `
-    ${isError ? "border-rose-600" : "border-default"}
+    ${isError ? "border-rose-600" : "border-black"}
      border-2 w-full focus:outline-none focus:border-indigo-700 p-1 shadow-sharp
     `
 }

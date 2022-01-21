@@ -8,7 +8,7 @@ import { Anchor } from "./anchor"
 import { LinkButton } from "./buttons"
 
 function CommentContainer({ children }: ContainerProps) {
-  return <div className="border-2 p-4">{children}</div>
+  return <div className="border-2 border-black  p-4">{children}</div>
 }
 
 function Comment({ name, email, body }: PostComment) {

@@ -7,7 +7,7 @@ import { RemoveButton } from "./buttons"
 import { RightArrow } from "./vectors"
 
 function PostListElementContainer({ children }: ContainerProps) {
-  return <div className="border-2 flex">{children}</div>
+  return <div className="border-2 border-black flex">{children}</div>
 }
 
 function PostListElement({ post }: { post: PostListElementType }) {

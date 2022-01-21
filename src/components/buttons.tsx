@@ -17,7 +17,7 @@ function createButtonStyles({
   disabled,
   isLoading,
 }: ButtonProps) {
-  return `bg-blue-900 font-bold py-2 px-4 border-2 border-default shadow focus:outline-none flex justify-center items-center shadow-sharp ${
+  return `bg-blue-900 font-bold py-2 px-4 border-2 border-black shadow focus:outline-none flex justify-center items-center shadow-sharp ${
     variant === "primary"
       ? "bg-indigo-700 text-white hover:bg-indigo-500 focus:bg-indigo-500"
       : "bg-white hover:bg-yellow-200 focus:bg-yellow-400"
