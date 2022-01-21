@@ -1,5 +1,5 @@
 import { UserCardList, UserCardListSkeleton } from "../components/user-card"
-import { useUsers } from "../utils/user"
+import { useUsers } from "../api/users"
 
 function UserList() {
   const { data = { users: { data: [] } }, loading, error } = useUsers()

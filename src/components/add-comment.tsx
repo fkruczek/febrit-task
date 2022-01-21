@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { AddCommentInput } from "../types/api-models"
-import { useCreateComment } from "../utils/comments"
+import { useCreateComment } from "../api/comments"
 import { appFieldsValidationRules } from "../utils/forms"
 import { noop } from "../utils/helpers"
 import { AppDialog, useDialog } from "./app-dialog"

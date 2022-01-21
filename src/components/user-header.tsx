@@ -1,7 +1,7 @@
 import VisuallyHidden from "@reach/visually-hidden"
 import Skeleton from "react-loading-skeleton"
 import { useNavigate } from "react-router-dom"
-import { useNameFromCache } from "../utils/user"
+import { useNameFromCache } from "../api/users"
 
 function UserHeader({
   name: nameFromProps,

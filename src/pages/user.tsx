@@ -1,7 +1,7 @@
 import { AddPostDialog } from "../components/add-post"
 import { PostList, PostListSkeleton } from "../components/post-list"
 import { UserHeader } from "../components/user-header"
-import { useUserPosts } from "../utils/posts"
+import { useUserPosts } from "../api/posts"
 
 function User() {
   const {

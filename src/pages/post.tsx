@@ -5,7 +5,7 @@ import {
   PostHeaderContent,
 } from "../components/post"
 import { UserHeader } from "../components/user-header"
-import { usePostDetails } from "../utils/posts"
+import { usePostDetails } from "../api/posts"
 
 function Post() {
   const {

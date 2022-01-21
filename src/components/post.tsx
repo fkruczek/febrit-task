@@ -1,7 +1,7 @@
 import Skeleton from "react-loading-skeleton"
 import { useParams } from "react-router-dom"
 import { ContainerProps } from "../types/util"
-import { useDeletePost } from "../utils/posts"
+import { useDeletePost } from "../api/posts"
 import { RemoveButton } from "./buttons"
 
 function PostContentContainer({ children }: ContainerProps) {

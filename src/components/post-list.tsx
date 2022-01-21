@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton"
 import { Link } from "react-router-dom"
 import { PostListElement as PostListElementType } from "../types/api-models"
 import { ContainerProps } from "../types/util"
-import { useDeletePost } from "../utils/posts"
+import { useDeletePost } from "../api/posts"
 import { RemoveButton } from "./buttons"
 import { RightArrow } from "./vectors"
 
