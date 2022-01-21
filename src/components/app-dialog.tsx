@@ -14,12 +14,12 @@ function DialogContainer({
 }) {
   return (
     <>
-      <div className="border-b-2 pl-4 h-6">{title}</div>
+      <div className="border-b-2 border-black pl-4 h-6">{title}</div>
       <div className="p-6 sm:p-12">
         <h1 className="text-4xl text-center mb-10">{title}</h1>
         {children}
       </div>
-      <div className="border-t-2 h-6" />
+      <div className="border-t-2 border-black h-6" />
     </>
   )
 }
@@ -45,7 +45,7 @@ function AppDialog({
         isOpen={isOpen}
         onDismiss={close}
         aria-label={title}
-        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28 border-2 p-0 shadow-sharp"
+        className="w-full absolute bottom-0 m-0 sm:static sm:max-w-xl sm:mx-auto sm:my-28 border-2 border-black p-0 shadow-sharp"
       >
         <DialogContainer title={title}>
           <DialogContext.Provider
